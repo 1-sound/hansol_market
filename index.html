@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>한솔마켓</title>
+    <link rel="stylesheet"
+        href="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/easygpt/default.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        /* 꾸미기 */
+        .hero {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        /* 팝업 스타일 */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+        }
+
+        .popup img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            object-fit: cover;
+            /* Ensure the image covers the container maintaining aspect ratio */
+            aspect-ratio: 1/1;
+            /* Set a fixed aspect ratio of 16:9 */
+        }
+
+        .popup .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .popup .card-subtitle {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #888;
+        }
+
+        .popup .card-text {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .popup .additional-text {
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* X 버튼 스타일 */
+        .close-button {
+            position: absolute;
+            top: -10px;
+            right: 5px;
+            font-size: 36px;
+            color: #000;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        /* 팝업과 어두운 배경 스타일 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .popup {
+            background-color: #fff;
+            padding: 30px;
+            /* 여백 조정 */
+            border-radius: 5px;
+            max-width: 600px;
+            display: none;
+        }
+
+        /* 팝업이 열릴 때 어두운 배경을 표시 */
+        .overlay.active {
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="hero bg-dark text-center py-5">
+        <h1 class="text-white">한솔마켓</h1>
+        <h2 class="text-white">집에 있는 물건을 팝니다!</h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4"> <!--쭈키링-->
+                <div class="card btn-popup">
+                    <img src="keyring.jpeg" class="card-img-top" alt="쭈키링">
+                    <div class="card-body">
+                        <h5 class="card-title">쭈키링</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">5천원</h6>
+                        <p class="card-text">양면 주호민 키링입니다. 머리만 팔아요.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4"> <!--오랑우탄-->
+                <div class="card btn-popup">
+                    <img src="yesol.jpeg" class="card-img-top" alt="오랑우탄">
+                    <div class="card-body">
+                        <h5 class="card-title">오랑우탄</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">3만원 드림</h6>
+                        <p class="card-text">저희 집에 있는 오랑우탄 팝니다. 17/수컷</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4"> <!--치킨-->
+                <div class="card btn-popup">
+                    <img src="chicken.jpeg" class="card-img-top" alt="치킨">
+                    <div class="card-body">
+                        <h5 class="card-title">치킨</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">30만원</h6>
+                        <p class="card-text">bhc 뿌링클.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4"> <!--삼겹살-->
+                <div class="card btn-popup">
+                    <img src="3gyeopsal.jpeg" class="card-img-top" alt="삼겹살">
+                    <div class="card-body">
+                        <h5 class="card-title">삼겹살</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">2만원</h6>
+                        <p class="card-text">먹다 남은 삼겹살.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4"> <!--딸기빙수-->
+                <div class="card btn-popup">
+                    <img src="ddalgibingsu.jpeg" class="card-img-top" alt="딸기빙수">
+                    <div class="card-body">
+                        <h5 class="card-title">딸기빙수</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1.5만원</h6>
+                        <p class="card-text">리얼 생 딸기빙수.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 팝업과 어두운 배경 -->
+    <div class="overlay"></div>
+    <div class="popup">
+        <span class="close-button">&times;</span>
+        <div class="popup-image-container">
+            <img src="" class="popup-image" alt="">
+        </div>
+        <div class="popup-content">
+            <h5 class="card-title"></h5>
+            <h6 class="card-subtitle mb-2 text-muted"></h6>
+            <p class="card-text"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ABmLFUblQQeuPAOsw4H8Gd1QydfBcYfCt4t1BRuKSeL5Pqjg6r4Dqrr0w2Ly3cT2"
+        crossorigin="anonymous"></script>
+    <script>
+        const btnPopups = document.querySelectorAll('.btn-popup');
+        const overlay = document.querySelector('.overlay');
+        const popup = document.querySelector('.popup');
+        const closeButton = document.querySelector('.close-button');
+        const popupImage = document.querySelector('.popup-image');
+        const popupTitle = document.querySelector('.popup-content .card-title');
+        const popupSubtitle = document.querySelector('.popup-content .card-subtitle');
+        const popupText = document.querySelector('.popup-content .card-text');
+
+        // 팝업 열기
+        function openPopup(imageSrc, title, subtitle, text) {
+            popupImage.src = imageSrc;
+            popupTitle.textContent = title;
+            popupSubtitle.textContent = subtitle;
+            popupText.textContent = text;
+            overlay.classList.add('active');
+            popup.style.display = 'block';
+        }
+
+        // 팝업 닫기
+        function closePopup() {
+            overlay.classList.remove('active');
+            popup.style.display = 'none';
+        }
+
+        // 각 카드의 팝업 열기 이벤트 설정
+        btnPopups.forEach(btnPopup => {
+            btnPopup.addEventListener('click', () => {
+                const imageSrc = btnPopup.querySelector('img').src;
+                const title = btnPopup.querySelector('.card-title').textContent;
+                const subtitle = btnPopup.querySelector('.card-subtitle').textContent;
+                const text = btnPopup.querySelector('.card-text').textContent;
+                openPopup(imageSrc, title, subtitle, text);
+            });
+        });
+
+        // 팝업 닫기 버튼 클릭 이벤트 설정
+        closeButton.addEventListener('click', closePopup);
+
+        // 어두운 배경 클릭 이벤트 설정
+        overlay.addEventListener('click', closePopup);
+
+    </script>
+</body>
+
+</html>
